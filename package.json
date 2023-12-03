@@ -4,6 +4,10 @@
     "typescript": "^5.3.2"
   },
   "dependencies": {
+    "commander": "^11.1.0",
     "isomorphic-git": "^1.25.0"
+  },
+  "scripts": {
+    "compile": "pkg ./build/index.js  --out-path bin/"
   }
 }
