@@ -5,9 +5,10 @@
   },
   "dependencies": {
     "commander": "^11.1.0",
-    "isomorphic-git": "^1.25.0"
+    "isomorphic-git": "^1.25.0",
+    "pkg": "^5.8.1"
   },
   "scripts": {
-    "compile": "pkg ./build/index.js  --out-path bin/"
+    "build": "tsc && pkg ./build/index.js  --out-path bin/ "
   }
 }
