@@ -13,10 +13,19 @@ export function cloneIndividualRepo(repoInfo: RepoInfo) {
 
     const dir = path.join(process.cwd(), fileName);
     console.log(dir);
-    
-    //const dir = path.join(process.cwd(), 'test-clone')
-    //const dir = path.join(process.cwd(), repoInfo.url.split('/').pop());
-    git.clone({ fs, http, dir, url: repoInfo.url })
+
+    git.clone({
+        fs,
+        http,
+        dir,
+        url: repoInfo.url,
+        onAuth: url => {
+            return {
+                username: process.env.GITHUB_USERNAME,
+                password: process.env.GITHUB_PAT
+            }
+        }
+    })
     .then((res) => {
         console.log(`repo cloned: ${fileName}`);
         return dir;
