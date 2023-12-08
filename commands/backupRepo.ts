@@ -12,25 +12,26 @@ export function cloneIndividualRepo(repoInfo: RepoInfo) {
     }
 
     const dir = path.join(process.cwd(), fileName);
-    console.log(dir);
 
-    git.clone({
+    const repo = git.clone({
         fs,
         http,
         dir,
         url: repoInfo.url,
         onAuth: url => {
             return {
-                username: process.env.GITHUB_USERNAME,
-                password: process.env.GITHUB_PAT
+                username: process.env.GIT_USERNAME,
+                password: process.env.GIT_PASSWORD
             }
         }
     })
     .then((res) => {
         console.log(`repo cloned: ${fileName}`);
-        return dir;
+        return fileName;
     })
     .catch((e) => {
       console.log(e);
     })
+
+    return repo;
 }

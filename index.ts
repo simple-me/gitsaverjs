@@ -1,6 +1,6 @@
 
 import { Command } from "commander";
-import { cloneIndividualRepo } from "./commands/clone";
+import { cloneIndividualRepo } from "./commands/backupRepo";
 
 const program = new Command();
 
@@ -14,13 +14,14 @@ program.command('backup-repo')
   .argument('<string>', 'repo or repos to backup')
   .option('-p, --provider <str>', 'repo provider', "infer")
   .action(
-      (str, options) => {
+      async (str, options) => {
         if (options.provider === "infer") {
           console.log("provider not specified, assuming...")
         }
-        cloneIndividualRepo({
+        const repo = await cloneIndividualRepo({
           "url": str
         });
+        console.log(repo);
     }
   )
 
