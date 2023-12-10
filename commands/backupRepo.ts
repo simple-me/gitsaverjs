@@ -4,6 +4,7 @@ import fs from "fs";
 import path = require("path");
 import http from "isomorphic-git/http/node";
 import { RepoInfo } from "../interfaces/interfaces";
+import { zipMe } from "../utils/utils";
 
 export function cloneIndividualRepo(repoInfo: RepoInfo) {
     const fileName = repoInfo.url.split('/').pop();
@@ -34,4 +35,8 @@ export function cloneIndividualRepo(repoInfo: RepoInfo) {
     })
 
     return repo;
+}
+
+export function compressRepo(repoName: string) {
+    zipMe("file.txt", "out.zip")
 }
