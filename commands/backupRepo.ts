@@ -8,6 +8,7 @@ import { zipMe } from "../utils/utils";
 
 export function cloneIndividualRepo(repoInfo: RepoInfo) {
     const fileName = repoInfo.url.split('/').pop();
+    const cloneDestination = `backups/${fileName}`;
     if (fileName === undefined) {
         throw new Error("error!")
     }
@@ -17,7 +18,8 @@ export function cloneIndividualRepo(repoInfo: RepoInfo) {
     const repo = git.clone({
         fs,
         http,
-        dir,
+        //dir: 'tests/',
+        dir: cloneDestination,
         url: repoInfo.url,
         onAuth: url => {
             return {
@@ -28,7 +30,8 @@ export function cloneIndividualRepo(repoInfo: RepoInfo) {
     })
     .then((res) => {
         console.log(`repo cloned: ${fileName}`);
-        return fileName;
+        //return fileName;
+        return cloneDestination;
     })
     .catch((e) => {
       console.log(e);
@@ -37,6 +40,7 @@ export function cloneIndividualRepo(repoInfo: RepoInfo) {
     return repo;
 }
 
-export function compressRepo(repoName: string) {
-    zipMe("file.txt", "out.zip")
+export function compressRepo(repoName: string, outFile: string) {
+    //zipMe(repoName, "out.zip")
+    zipMe(repoName, outFile);
 }
