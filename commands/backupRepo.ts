@@ -4,11 +4,12 @@ import fs from "fs";
 import path = require("path");
 import http from "isomorphic-git/http/node";
 import { RepoInfo } from "../interfaces/interfaces";
-import { zipMe } from "../utils/utils";
+import { zipMe, randomString } from "../utils/utils";
 
 export function cloneIndividualRepo(repoInfo: RepoInfo) {
     const fileName = repoInfo.url.split('/').pop();
-    const cloneDestination = `backups/${fileName}`;
+    //const cloneDestination = `backups/${fileName}`;
+    const cloneDestination = `backups${randomString()}/${fileName}`;
     if (fileName === undefined) {
         throw new Error("error!")
     }

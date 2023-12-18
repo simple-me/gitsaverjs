@@ -1,5 +1,6 @@
 import fs from "fs";
 import archiver from "archiver";
+import crypto from 'crypto'
 
 export function zipMe(filename: string, outName: string) {
   const output = fs.createWriteStream(outName);
@@ -8,7 +9,9 @@ export function zipMe(filename: string, outName: string) {
   });
 
   archive.on('error', function(err) {
-    console.log(err);
+    //console.log(err.message);
+    //console.log("error");
+    return "error zipping file!"
   });
 
   const fullPath = filename;
@@ -30,4 +33,10 @@ export function zipMe(filename: string, outName: string) {
   });
 
   archive.finalize();
+}
+
+
+export function randomString(): string {
+  const randomString = crypto.randomBytes(4).toString('hex');
+  return randomString;
 }
