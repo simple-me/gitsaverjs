@@ -22,7 +22,7 @@ async function cloneAction(cloneDestination: string, url: string) {
 }
 
 
-export async function cloneIndividualRepo(repoInfo: RepoInfo) {
+export async function cloneRepo(repoInfo: RepoInfo) {
     const repos = repoInfo.url.split(",");
     const initialDir = repoInfo.initialDir;
     const promises = [];

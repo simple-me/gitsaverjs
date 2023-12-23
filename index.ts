@@ -1,6 +1,6 @@
 
 import { Command } from "commander";
-import { cloneIndividualRepo } from "./commands/backupRepo";
+import { cloneRepo } from "./commands/backupRepo";
 import { zipMe, randomString } from "./utils/utils";
 
 const program = new Command();
@@ -23,7 +23,7 @@ program.command('backup-repo')
         }
 
         const initialDir = `backups${randomString()}`
-        const repo = cloneIndividualRepo({
+        const repo = cloneRepo({
           "url": str,
           "initialDir": initialDir
         })
