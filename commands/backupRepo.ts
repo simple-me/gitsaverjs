@@ -1,27 +1,16 @@
 
 import git from "isomorphic-git";
-import fs from "fs";
+import fs, { createReadStream } from "fs";
 import path = require("path");
 import http from "isomorphic-git/http/node";
 import { RepoInfo } from "../interfaces/interfaces";
-import { zipMe, randomString } from "../utils/utils";
 
-export function cloneIndividualRepo(repoInfo: RepoInfo) {
-    const fileName = repoInfo.url.split('/').pop();
-    //const cloneDestination = `backups/${fileName}`;
-    const cloneDestination = `backups${randomString()}/${fileName}`;
-    if (fileName === undefined) {
-        throw new Error("error!")
-    }
-
-    const dir = path.join(process.cwd(), fileName);
-
+async function cloneAction(cloneDestination: string, url: string) {
     const repo = git.clone({
         fs,
         http,
-        //dir: 'tests/',
         dir: cloneDestination,
-        url: repoInfo.url,
+        url: url,
         onAuth: url => {
             return {
                 username: process.env.GIT_USERNAME,
@@ -29,19 +18,29 @@ export function cloneIndividualRepo(repoInfo: RepoInfo) {
             }
         }
     })
-    .then((res) => {
-        console.log(`repo cloned: ${fileName}`);
-        //return fileName;
-        return cloneDestination;
-    })
-    .catch((e) => {
-      console.log(e);
-    })
-
     return repo;
 }
 
-export function compressRepo(repoName: string, outFile: string) {
-    //zipMe(repoName, "out.zip")
-    zipMe(repoName, outFile);
+
+export async function cloneIndividualRepo(repoInfo: RepoInfo) {
+    const repos = repoInfo.url.split(",");
+    const initialDir = repoInfo.initialDir;
+    const promises = [];
+    
+    for (let i in repos) {
+        console.log(`repo: ${repos[i]}`);
+        const fileName = repos[i].split('/').pop();
+        const cloneDestination = `${initialDir}/${fileName}`;
+        console.log(`destination: ${cloneDestination}`);
+        if (fileName === undefined) {
+            throw new Error("error!")
+        }
+
+        const dir = path.join(process.cwd(), fileName);
+        promises.push(cloneAction(cloneDestination, repos[i]));
+
+    }
+
+    const results = await Promise.all(promises);
+    return results;
 }

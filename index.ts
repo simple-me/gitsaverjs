@@ -1,7 +1,7 @@
 
 import { Command } from "commander";
 import { cloneIndividualRepo } from "./commands/backupRepo";
-import { compressRepo } from "./commands/backupRepo";
+import { zipMe, randomString } from "./utils/utils";
 
 const program = new Command();
 
@@ -15,22 +15,22 @@ program.command('backup-repo')
   .argument('<string>', 'repo or repos to backup')
   .option('-p, --provider <str>', 'repo provider', "infer")
   .option('-o, --output-file <str>', 'filename')
+  .option('-b, --bucket-name <str>', 'bucket name', '')
   .action(
-      async (str, options) => {
+     async (str, options) => {
         if (options.provider === "infer") {
           console.log("provider not specified, assuming...")
         }
-        const repo = await cloneIndividualRepo({
-          "url": str
+
+        const initialDir = `backups${randomString()}`
+        const repo = cloneIndividualRepo({
+          "url": str,
+          "initialDir": initialDir
+        })
+        .then((r) =>{
+          const compressedRepo = zipMe(initialDir, options.outputFile, options.bucketName);
         });
-        console.log(repo);
-
-        if (repo === undefined) {
-          throw Error("repo not cloned!")
-        }
-
-        console.log(repo);
-        const compressedRepo = compressRepo(repo, options.outputFile)
+      
     }
     
   )
