@@ -34,6 +34,8 @@ export async function zipMe(filename: any, outName: string, bucketName: string) 
     fs.rm(dirName, { recursive: true }, () => {console.log('cleanup done!')});
     if (bucketName) {
       const s3 = sendToS3(outName, bucketName);
+    }else{
+      console.log("Remote location not specified, just storing locally")
     }
 
   });
