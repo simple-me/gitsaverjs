@@ -1,12 +1,18 @@
 CLI to backup your git repos and store either locally and/or in another remote supported platform, currently only S3 buckets.
 
+# Tested with
+
+```
+node 18
+```
+
 # Install dependencies
 
 ```
 npm install
 ```
 
-# Package into a binary
+# Build & package into a binary
 
 ```
 npm run build
