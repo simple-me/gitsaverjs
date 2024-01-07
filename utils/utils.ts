@@ -1,4 +1,5 @@
 import fs from "fs";
+import path from "path";
 import archiver from "archiver";
 import crypto from 'crypto';
 import {S3Client, PutObjectCommand} from "@aws-sdk/client-s3";
@@ -67,4 +68,16 @@ export function sendToS3(filename: string, destinationBucket: string) {
 export function randomString(): string {
   const randomString = crypto.randomBytes(4).toString('hex');
   return randomString;
+}
+
+export async function convertFileToString(filename: string): Promise<string> {
+  console.log("converting file to repos separated by commas");
+  try {
+    const data = fs.readFileSync(filename, 'utf8').split(/\r?\n/);
+    return data.map(e => e).join();
+  } catch (err) {
+    console.error(err);
+    console.log(err)
+    throw Error("error while reading repos file");
+  }
 }

@@ -1,7 +1,7 @@
 
 import { Command } from "commander";
 import { cloneRepo } from "./commands/backupRepo";
-import { zipMe, randomString } from "./utils/utils";
+import { zipMe, randomString, convertFileToString } from "./utils/utils";
 
 const program = new Command();
 
@@ -12,14 +12,15 @@ program
 
 program.command('backup-repo')
   .description('Split a string into substrings and display as an array')
-  .argument('<string>', 'repo or repos to backup')
-  .option('-p, --provider <str>', 'repo provider', "infer")
+  .argument('[string]', 'repo or repos to backup', '')
+  .option('-fr, --file-repo <str>', 'repos from file', '')
   .option('-o, --output-file <str>', 'filename')
   .option('-b, --bucket-name <str>', 'bucket name', '')
   .action(
      async (str, options) => {
-        if (options.provider === "infer") {
-          console.log("provider not specified, assuming...")
+
+        if (options.fileRepo !== undefined) {
+          str = await convertFileToString(options.fileRepo);
         }
 
         const initialDir = `backups${randomString()}`

@@ -25,3 +25,9 @@ npm run build
 ```
 
 You can omit the "-b" flag to avoid submitting the out file to a S3 bucket.
+
+# Example2:
+
+```
+./bin/index-linux backup-repo -fr text_file_containing_repos -o <out file name> -b <s3 bucket name>
+```
