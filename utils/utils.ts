@@ -74,9 +74,12 @@ export async function convertFileToString(filename: string): Promise<string> {
   console.log("converting file to repos separated by commas");
   try {
     const data = fs.readFileSync(filename, 'utf8').split(/\r?\n/);
-    return data.map(e => e).join();
+    const reposString = data.map(e => e).join();
+    const lastComma = reposString.lastIndexOf(",");
+    const finalString = reposString.substring(0,lastComma);
+    return finalString;
+    
   } catch (err) {
-    console.error(err);
     console.log(err)
     throw Error("error while reading repos file");
   }

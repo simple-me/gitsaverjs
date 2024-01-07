@@ -12,7 +12,7 @@ node 18
 npm install
 ```
 
-# Build & package into a binary
+# Build
 
 ```
 npm run build
@@ -21,7 +21,7 @@ npm run build
 # Example:
 
 ```
-./bin/index-linux backup-repo https://<repo domain>.git -o <out file name> -b <s3 bucket name>
+node ./build/index.js backup-repo https://<repo domain>.git -o <out file name> -b <s3 bucket name>
 ```
 
 You can omit the "-b" flag to avoid submitting the out file to a S3 bucket.
@@ -29,5 +29,5 @@ You can omit the "-b" flag to avoid submitting the out file to a S3 bucket.
 # Example2:
 
 ```
-./bin/index-linux backup-repo -fr text_file_containing_repos -o <out file name> -b <s3 bucket name>
+node ./build/index.js backup-repo -fr text_file_containing_repos -o <out file name> -b <s3 bucket name>
 ```
