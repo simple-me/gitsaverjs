@@ -4,7 +4,7 @@ import archiver from "archiver";
 import crypto from 'crypto';
 import {S3Client, PutObjectCommand} from "@aws-sdk/client-s3";
 
-export async function zipMe(filename: any, outName: string, bucketName: string) {
+export async function zipMe(filename: any, outName: string, bucketName?: string) {
 
   const output = fs.createWriteStream(outName);
   const archive = archiver.create('zip', {
