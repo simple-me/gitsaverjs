@@ -26,6 +26,7 @@ export async function cloneRepo(repoInfo: RepoInfo) {
     const repos = repoInfo.url.split(",");
     const initialDir = repoInfo.initialDir;
     const promises = [];
+    const finalRepoDestinations = [];
     
     for (let i in repos) {
         console.log(`repo: ${repos[i]}`);
@@ -38,9 +39,16 @@ export async function cloneRepo(repoInfo: RepoInfo) {
 
         const dir = path.join(process.cwd(), fileName);
         promises.push(cloneAction(cloneDestination, repos[i]));
+        finalRepoDestinations.push(cloneDestination);
 
     }
 
-    const results = await Promise.all(promises);
-    return results;
+    try{
+        const results = await Promise.all(promises);
+        return finalRepoDestinations;
+    }catch(e) {
+        console.log(e);
+        return "error cloning repos";
+    }
+    //return results;
 }

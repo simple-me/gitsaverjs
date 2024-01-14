@@ -18,6 +18,13 @@ npm install
 npm run build
 ```
 
+# Export git vars
+
+```
+export GIT_USERNAME="username"
+export GIT_PASSWORD="password,PAT,etc"
+```
+
 # Example:
 
 ```
