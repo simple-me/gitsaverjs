@@ -17,7 +17,7 @@
     "pkg": "^5.8.1"
   },
   "scripts": {
-    "build": "tsc && pkg ./build/index.js  --out-path bin/ ",
+    "build": "tsc",
     "test": "jest"
   }
 }

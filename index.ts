@@ -12,10 +12,10 @@ program
 
 program.command('backup-repo')
   .description('Split a string into substrings and display as an array')
-  .argument('[string]', 'repo or repos to backup', '')
-  .option('-fr, --file-repo <str>', 'repos from file', '')
-  .option('-o, --output-file <str>', 'filename')
-  .option('-b, --bucket-name <str>', 'bucket name', '')
+  .argument('[string]', 'repo or repos to backup', undefined)
+  .option('-fr, --file-repo <str>', 'repos from file', undefined)
+  .option('-o, --output-file <str>', undefined)
+  .option('-b, --bucket-name <str>', 'bucket name', undefined)
   .action(
      async (str, options) => {
 
